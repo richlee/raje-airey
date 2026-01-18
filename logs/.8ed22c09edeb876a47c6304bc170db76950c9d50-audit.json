@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "/Users/rich/dev/dev-rich/raje-airey/logs/.8ed22c09edeb876a47c6304bc170db76950c9d50-audit.json",
+    "files": [
+        {
+            "date": 1768759107846,
+            "name": "/Users/rich/dev/dev-rich/raje-airey/logs/error-2026-01-18.log",
+            "hash": "9d9fa12962083d4d5098f0e19a53a18ca0b0e5067e70818aad8ea91b2c2fdaf1"
+        }
+    ],
+    "hashType": "sha256"
+}

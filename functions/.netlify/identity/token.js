@@ -4,33 +4,36 @@
 export async function onRequestPost(context) {
   const { request, env } = context;
 
-  // Handle CORS
-  if (request.method === 'OPTIONS') {
-    return corsResponse();
-  }
-
   try {
-    const body = await request.formData().catch(() => null) || await request.json().catch(() => ({}));
-
-    // Get credentials from form data or JSON
-    let password;
-    if (body instanceof FormData) {
-      password = body.get('password');
-    } else {
-      password = body.password;
-    }
-
     // Check against the configured CMS password
     const cmsPassword = env.CMS_PASSWORD;
     if (!cmsPassword) {
       return jsonResponse({ error: 'CMS authentication not configured' }, 500);
     }
 
+    // Get the raw body text first
+    const bodyText = await request.text();
+    let password;
+
+    // Try to parse as JSON first
+    try {
+      const json = JSON.parse(bodyText);
+      password = json.password;
+    } catch {
+      // Try to parse as form data
+      const params = new URLSearchParams(bodyText);
+      password = params.get('password');
+    }
+
+    if (!password) {
+      return jsonResponse({ error: 'Password required' }, 400);
+    }
+
     if (password !== cmsPassword) {
       return jsonResponse({ error: 'Invalid password' }, 401);
     }
 
-    // Generate a simple access token (in production, use proper JWT)
+    // Generate a simple access token
     const token = btoa(JSON.stringify({
       exp: Date.now() + (24 * 60 * 60 * 1000), // 24 hours
       user: 'cms-editor'
@@ -48,10 +51,6 @@ export async function onRequestPost(context) {
 }
 
 export async function onRequestOptions() {
-  return corsResponse();
-}
-
-function corsResponse() {
   return new Response(null, {
     headers: {
       'Access-Control-Allow-Origin': '*',
