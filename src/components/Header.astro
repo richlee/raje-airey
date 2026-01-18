@@ -110,17 +110,6 @@ const currentPath = Astro.url.pathname;
     color: white;
     font-size: 0.9rem;
     overflow: hidden;
-    display: grid;
-    grid-template-rows: 1fr;
-    transition: grid-template-rows 0.3s ease-out;
-  }
-
-  .header-wrapper.scrolled .top-bar {
-    grid-template-rows: 0fr;
-  }
-
-  .top-bar > * {
-    overflow: hidden;
   }
 
   .top-bar-inner {
@@ -131,7 +120,13 @@ const currentPath = Astro.url.pathname;
     justify-content: center;
     align-items: center;
     gap: 30px;
-    min-height: 0; /* Required for grid collapse to work */
+    transition: opacity 0.25s ease-out, transform 0.25s ease-out;
+  }
+
+  .header-wrapper.scrolled .top-bar-inner {
+    opacity: 0;
+    transform: translateY(-5px);
+    pointer-events: none;
   }
 
   .top-bar .phone {
