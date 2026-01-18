@@ -6,7 +6,8 @@ export async function onRequestGet(context) {
     github_enabled: true,
     gitlab_enabled: false,
     bitbucket_enabled: false,
-    roles: null
+    roles: null,
+    repo: "richlee/raje-airey"
   }), {
     headers: {
       'Content-Type': 'application/json',
