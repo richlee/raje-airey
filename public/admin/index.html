@@ -5,6 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex" />
     <title>Content Manager | Raje Airey</title>
+    <script>
+      // Check for auth token from localStorage fallback
+      (function() {
+        const stored = localStorage.getItem("decap-cms-auth");
+        if (stored) {
+          try {
+            const auth = JSON.parse(stored);
+            if (auth.token) {
+              // Store in the format Decap CMS expects
+              localStorage.setItem("netlify-cms-user", JSON.stringify({
+                token: auth.token,
+                provider: auth.provider || "github"
+              }));
+              localStorage.removeItem("decap-cms-auth");
+              // Reload to pick up the auth
+              if (!sessionStorage.getItem("auth-reloaded")) {
+                sessionStorage.setItem("auth-reloaded", "true");
+                window.location.reload();
+              }
+            }
+          } catch (e) {
+            console.error("Auth parse error:", e);
+          }
+        }
+        sessionStorage.removeItem("auth-reloaded");
+      })();
+    </script>
   </head>
   <body>
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>

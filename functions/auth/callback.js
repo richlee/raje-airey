@@ -45,32 +45,31 @@ export async function onRequestGet(context) {
   <head>
     <meta charset="utf-8">
     <title>Authenticating...</title>
+    <style>
+      body { font-family: sans-serif; text-align: center; padding: 50px; }
+      a { color: #E09900; }
+    </style>
   </head>
   <body>
-    <p>Authenticating with GitHub...</p>
+    <p id="status">Completing authentication...</p>
     <script>
       (function() {
-        function receiveMessage(e) {
-          console.log("postMessage received:", e);
-          window.removeEventListener("message", receiveMessage, false);
-          window.close();
-        }
-        window.addEventListener("message", receiveMessage, false);
+        const token = "${token}";
+        const provider = "${provider}";
+        const message = "authorization:" + provider + ":success:" + JSON.stringify({ token: token, provider: provider });
 
-        const message = "authorization:${provider}:success:" + JSON.stringify({
-          token: "${token}",
-          provider: "${provider}"
-        });
-
-        console.log("Sending message:", message);
-
+        // Try postMessage to opener first
         if (window.opener) {
           window.opener.postMessage(message, "*");
-          setTimeout(function() {
-            window.close();
-          }, 1000);
+          document.getElementById("status").innerText = "Success! This window will close...";
+          setTimeout(function() { window.close(); }, 500);
         } else {
-          document.body.innerHTML = "<p>Error: No opener window found. Please close this window and try again.</p>";
+          // Fallback: store in localStorage and redirect
+          localStorage.setItem("decap-cms-auth", JSON.stringify({ token: token, provider: provider }));
+          document.getElementById("status").innerHTML =
+            'Authentication successful!<br><br>' +
+            '<a href="/admin/">Click here to return to the CMS</a><br><br>' +
+            '<small>You can close this tab after clicking the link.</small>';
         }
       })();
     </script>
