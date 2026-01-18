@@ -60,17 +60,23 @@ const currentPath = Astro.url.pathname;
     const headerWrapper = document.querySelector('.header-wrapper');
     if (!headerWrapper) return;
 
-    let lastScrollY = 0;
+    let isScrolled = false;
     let ticking = false;
+
+    // Hysteresis thresholds to prevent flickering
+    const SCROLL_DOWN_THRESHOLD = 30;
+    const SCROLL_UP_THRESHOLD = 10;
 
     function updateHeader() {
       const scrollY = window.scrollY;
 
-      // Add scrolled class when we've scrolled past the top bar
-      if (scrollY > 20) {
+      // Use different thresholds for scrolling down vs up (hysteresis)
+      if (!isScrolled && scrollY > SCROLL_DOWN_THRESHOLD) {
         headerWrapper.classList.add('scrolled');
-      } else {
+        isScrolled = true;
+      } else if (isScrolled && scrollY < SCROLL_UP_THRESHOLD) {
         headerWrapper.classList.remove('scrolled');
+        isScrolled = false;
       }
 
       ticking = false;
@@ -104,12 +110,17 @@ const currentPath = Astro.url.pathname;
     color: white;
     font-size: 0.9rem;
     overflow: hidden;
-    max-height: 50px;
-    transition: max-height 0.4s ease, padding 0.4s ease, opacity 0.4s ease;
+    display: grid;
+    grid-template-rows: 1fr;
+    transition: grid-template-rows 0.3s ease-out;
   }
 
   .header-wrapper.scrolled .top-bar {
-    max-height: 32px;
+    grid-template-rows: 0fr;
+  }
+
+  .top-bar > * {
+    overflow: hidden;
   }
 
   .top-bar-inner {
@@ -120,12 +131,7 @@ const currentPath = Astro.url.pathname;
     justify-content: center;
     align-items: center;
     gap: 30px;
-    transition: padding 0.4s ease, font-size 0.4s ease;
-  }
-
-  .header-wrapper.scrolled .top-bar-inner {
-    padding: 5px 30px;
-    font-size: 0.8rem;
+    min-height: 0; /* Required for grid collapse to work */
   }
 
   .top-bar .phone {
@@ -218,12 +224,6 @@ const currentPath = Astro.url.pathname;
       gap: 5px;
       padding: 10px 20px;
       font-size: 0.85rem;
-    }
-
-    .header-wrapper.scrolled .top-bar-inner {
-      flex-direction: row;
-      padding: 5px 20px;
-      font-size: 0.75rem;
     }
 
     .header-inner {
