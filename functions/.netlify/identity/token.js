@@ -16,19 +16,17 @@ export async function onRequestPost(context) {
     let password;
 
     // Try to parse as JSON first
-    let parseError = null;
     try {
       const json = JSON.parse(bodyText);
       password = json.password;
-    } catch (e) {
-      parseError = e.message;
+    } catch {
       // Try to parse as form data
       const params = new URLSearchParams(bodyText);
       password = params.get('password');
     }
 
     if (!password) {
-      return jsonResponse({ error: 'Password required', debug: { bodyText, parseError, password } }, 400);
+      return jsonResponse({ error: 'Password required' }, 400);
     }
 
     if (password !== cmsPassword) {
