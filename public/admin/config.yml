@@ -1,0 +1,22 @@
+backend:
+  name: github
+  repo: richlee/raje-airey
+  branch: main
+  base_url: https://raje-airey.pages.dev
+  auth_endpoint: /auth
+
+media_folder: public/images
+public_folder: /images
+
+collections:
+  - name: blog
+    label: Blog Posts
+    folder: src/content/blog
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "string" }
+      - { label: "Publish Date", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "Draft", name: "draft", widget: "boolean", default: false }
+      - { label: "Body", name: "body", widget: "markdown" }
