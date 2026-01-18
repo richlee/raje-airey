@@ -5,35 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex" />
     <title>Content Manager | Raje Airey</title>
-    <script>
-      // Check for auth token from localStorage fallback
-      (function() {
-        const stored = localStorage.getItem("decap-cms-auth");
-        if (stored) {
-          try {
-            const auth = JSON.parse(stored);
-            if (auth.token) {
-              // Store in the format Decap CMS expects
-              localStorage.setItem("netlify-cms-user", JSON.stringify({
-                token: auth.token,
-                provider: auth.provider || "github"
-              }));
-              localStorage.removeItem("decap-cms-auth");
-              // Reload to pick up the auth
-              if (!sessionStorage.getItem("auth-reloaded")) {
-                sessionStorage.setItem("auth-reloaded", "true");
-                window.location.reload();
-              }
-            }
-          } catch (e) {
-            console.error("Auth parse error:", e);
-          }
-        }
-        sessionStorage.removeItem("auth-reloaded");
-      })();
-    </script>
   </head>
   <body>
+    <script>
+      // Listen for the auth message before CMS loads
+      window.addEventListener("message", function(e) {
+        console.log("Message received:", e.data);
+      });
+
+      // Check for stored auth and replay as postMessage when CMS is ready
+      const storedAuth = localStorage.getItem("decap-cms-auth");
+      if (storedAuth) {
+        window.addEventListener("load", function() {
+          setTimeout(function() {
+            try {
+              const auth = JSON.parse(storedAuth);
+              if (auth.token) {
+                const message = "authorization:github:success:" + JSON.stringify({
+                  token: auth.token,
+                  provider: "github"
+                });
+                console.log("Replaying auth message:", message);
+                window.postMessage(message, "*");
+                localStorage.removeItem("decap-cms-auth");
+              }
+            } catch (e) {
+              console.error("Auth replay error:", e);
+            }
+          }, 1000); // Wait for CMS to initialize
+        });
+      }
+    </script>
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
   </body>
 </html>
