@@ -1,0 +1,155 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+
+const faqs = [
+  {
+    question: 'What sorts of issues do you work with?',
+    answer: `<p>Some of the most common issues I see in my practice:</p>
+    <ul>
+      <li>Adoption</li>
+      <li>Adverse childhood experiences</li>
+      <li>Anxiety and stress</li>
+      <li>Attachment issues</li>
+      <li>Bullying</li>
+      <li>Eating disorders</li>
+      <li>Emotional regulation</li>
+      <li>Feeling isolated, lacking direction</li>
+      <li>Grief and loss</li>
+      <li>Mood swings</li>
+      <li>Relationship difficulties – past or present</li>
+      <li>School, college or workplace problems</li>
+      <li>Self-criticism & low self-esteem</li>
+      <li>Self-harm</li>
+      <li>Transitions (e.g. to college, uni, having a baby, redundancy or retirement)</li>
+      <li>Trauma</li>
+    </ul>`
+  },
+  {
+    question: 'What does therapy involve?',
+    answer: `<p>Therapy involves the whole spectrum of human experience and emotion. In a safe, confidential setting, it is an opportunity to reflect on yourself and your life. To take a closer look at areas that may feel difficult, confusing, upsetting or frustrating. Therapy can help you 'get your house in order' so that you can resolve something. It aims to help you gain a better understanding of yourself, your relationships and your 'lifeworld' so that you can move forwards.</p>`
+  },
+  {
+    question: "How can 'just talking' help?",
+    answer: `<p>A conversation with a therapist is different to other sorts of talking as the focus of attention is on you. At first this can feel strange or challenging, so I will help put you at ease, listening carefully to what you say, going at your pace and helping you stay grounded. I never expect you to reveal more than you want to and by working together I will help you make sense of your experiences and find ways to move forward.</p>`
+  },
+  {
+    question: 'Does it matter what sort of therapy I choose?',
+    answer: `<p>Studies show that a good 'fit' between you and your therapist is very important when considering client outcomes. It is a good idea to do some research and see what appeals to you. Ideally speak to a variety of therapists before deciding. If I think that you would benefit from a different therapist or approach, then I will point you in the right direction.</p>`
+  },
+  {
+    question: 'Do you work with people who are in crisis?',
+    answer: `<p>At the first appointment I complete a risk assessment with all my clients and keep this under review as we go along. I will work with people in crisis provided they are stable, can benefit from working with me and have good support systems in place outside of therapy. These can include family or friends, regular contact with a GP or the support of mental health services. If I became concerned about a deterioration in your mental state, I would seek consent to share information with your GP. This is explained more fully in my therapy agreement.</p>`
+  },
+  {
+    question: 'What is the difference between counselling and psychotherapy?',
+    answer: `<p>The terms are often used interchangeably and there is no hard and fast distinction in the way I work. Psychotherapy is a Post-Grad level training and involves substantial hours spent in personal therapy and supervision. Counselling training is at under-grad or graduate level, may or may not require personal therapy and requires fewer hours to qualify. United Kingdom Council for Psychotherapy (UKCP) registration is generally seen as the 'gold standard' of the profession.</p>`
+  },
+  {
+    question: 'What happens in a therapy session?',
+    answer: `<p>Therapy sometimes involves intense emotional discussions. You may find yourself crying, upset, or feeling angry or frustrated. Some people feel physically exhausted after a session and may feel worse before they start feeling better. And many look forward to their sessions. There can be moments of shared humour and celebrations of positive changes along the way. Everyone's experience is unique and I take care that it is manageable for you.</p>`
+  },
+  {
+    question: 'What kind of counselling or psychotherapy do you do?',
+    answer: `<p>I am an integrative counsellor and psychotherapist. This means I combine a range of theories from different schools and traditions of thought. These are integrated within a relational-developmental framework, making it different from a random 'pick and mix' approach. But you as a person and our therapeutic relationship take priority over theory and any diagnostic labels you may or may not have. And it is through accepting – coming to terms with – all aspects of ourselves that change becomes possible.</p>`
+  }
+];
+---
+
+<BaseLayout title="FAQ - Raje Airey">
+  <section class="page-header">
+    <h1>Frequently Asked Questions</h1>
+    <p class="subtitle">Some of the questions and queries surrounding psychotherapy and counselling.</p>
+  </section>
+
+  <section class="faq-content">
+    <div class="faq-grid">
+      {faqs.map(faq => (
+        <div class="faq-item">
+          <h3>{faq.question}</h3>
+          <Fragment set:html={faq.answer} />
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="ask-section">
+    <a href="/contact/" class="btn btn-primary">ASK A QUESTION</a>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-header {
+    text-align: center;
+    padding: 50px 0 40px;
+    border-bottom: none;
+  }
+
+  .page-header h1 {
+    font-size: 2.5rem;
+    color: var(--color-text);
+    margin-bottom: 15px;
+  }
+
+  .page-header .subtitle {
+    color: var(--color-text-muted);
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .faq-content {
+    padding: 40px 0 60px;
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding-left: var(--spacing-page);
+    padding-right: var(--spacing-page);
+    border-top: none;
+  }
+
+  .faq-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px 60px;
+  }
+
+  .faq-item h3 {
+    color: #1a5276;
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: 0 0 15px;
+  }
+
+  .faq-item p {
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    margin: 0 0 1em;
+  }
+
+  .faq-item ul {
+    color: var(--color-text-muted);
+    margin: 0;
+    padding-left: 1.2em;
+  }
+
+  .faq-item li {
+    margin-bottom: 0.4em;
+    line-height: 1.5;
+  }
+
+  .ask-section {
+    text-align: center;
+    padding: 40px 0 60px;
+    border-top: none;
+  }
+
+  @media (max-width: 768px) {
+    .faq-grid {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+
+    .page-header h1 {
+      font-size: 2rem;
+    }
+  }
+</style>

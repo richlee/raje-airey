@@ -1,0 +1,393 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+
+const services = [
+  {
+    title: 'Counselling',
+    description: 'a solution-focused approach for immediate concerns',
+    image: '/images/service-counselling.jpg',
+    href: '/services/#counselling'
+  },
+  {
+    title: 'Psychotherapy',
+    description: 'working at depth to address complex issues',
+    image: '/images/service-psychotherapy.jpg',
+    href: '/services/#psychotherapy'
+  },
+  {
+    title: 'Young People',
+    description: 'talking to someone outside the family can be helpful',
+    image: '/images/service-young-people.jpg',
+    href: '/services/#young-people'
+  },
+  {
+    title: 'Supervision',
+    description: 'trainee and qualified practitioners, 1:1 or in groups',
+    image: '/images/service-supervision.jpg',
+    href: '/services/#supervision'
+  }
+];
+
+const faqs = [
+  { question: 'What sorts of issues do you work with?' },
+  { question: 'What does therapy involve?' },
+  { question: "How can 'just talking' help?" },
+  { question: 'Does it matter what sort of therapy I choose?' },
+  { question: 'Do you work with people who are in crisis?' },
+  { question: 'What is the difference between counselling and psychotherapy?' }
+];
+---
+
+<BaseLayout title="Raje Airey Counselling">
+  <section class="hero">
+    <h1>Raje Airey</h1>
+    <p class="credentials">MSc <span>she/her</span></p>
+    <p class="subtitle">Psychotherapist & counsellor</p>
+    <p class="lead">
+      Everyone has a story to tell. Whether you are new to therapy or have tried it before,
+      if something is not right or you want to understand yourself better, I may be able to help.
+    </p>
+  </section>
+
+  <section class="content-section">
+    <div class="two-col">
+      <div class="col-image">
+        <img src="/images/word-cloud.png" alt="Word cloud showing areas of support" />
+      </div>
+      <div class="col-text">
+        <p>
+          I offer therapy and counselling to adults and young people (18+) and supervision to
+          trainee and qualified practitioners. I draw on nearly twenty years' clinical experience –
+          in the NHS, education, workplace settings and private practice.
+        </p>
+
+        <div class="quote-block">
+          <svg class="quote-icon" viewBox="0 0 50 40" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 20c-5.5 0-10 4.5-10 10s4.5 10 10 10c5.5 0 10-4.5 10-10 0-15-10-30-20-30v8c5 0 10 7 10 12z" fill="currentColor"/>
+            <path d="M40 20c-5.5 0-10 4.5-10 10s4.5 10 10 10c5.5 0 10-4.5 10-10 0-15-10-30-20-30v8c5 0 10 7 10 12z" fill="currentColor"/>
+          </svg>
+          <div class="quote-body">
+            <img src="/images/raje-portrait.jpg" alt="Raje Airey" class="quote-portrait" />
+            <div class="quote-content">
+              <p class="quote-text">
+                'I welcome people from all walks of life and offer a safe space for you to tell
+                your story and be heard.'
+              </p>
+              <p class="quote-author">Raje Airey</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="services-section">
+    <div class="services-grid">
+      {services.map(service => (
+        <a href={service.href} class="service-card">
+          <div class="service-image">
+            <img src={service.image} alt={service.title} />
+          </div>
+          <h3>{service.title}</h3>
+          <p>{service.description}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="banner-section">
+    <a href="/services/" class="btn btn-gold">LEARN MORE</a>
+  </section>
+
+  <section class="testimonials-section">
+    <div class="testimonial-card">
+      <p class="testimonial-quote">"Counselling has helped me calm down...</p>
+      <p class="testimonial-subquote">...I feel more secure in myself."</p>
+    </div>
+    <div class="testimonial-card">
+      <p class="testimonial-quote">"I feel more confident about the future...</p>
+      <p class="testimonial-subquote">...I have learned some better coping strategies."</p>
+    </div>
+  </section>
+
+  <section class="faq-section">
+    <h2>FAQs</h2>
+    <div class="faq-grid">
+      {faqs.map(faq => (
+        <div class="faq-item">
+          <span class="faq-question">{faq.question}</span>
+          <span class="faq-icon">+</span>
+        </div>
+      ))}
+    </div>
+    <p class="text-center">
+      <a href="/faq/" class="btn btn-dark">SEE MORE</a>
+    </p>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    padding: 50px 0 30px;
+    border-bottom: none;
+  }
+
+  .hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 5px;
+  }
+
+  .credentials {
+    color: var(--color-text-light);
+    font-size: 0.95rem;
+    margin: 0 0 10px;
+  }
+
+  .credentials span {
+    margin-left: 5px;
+  }
+
+  .content-section {
+    padding: 40px 0;
+    border-top: none;
+  }
+
+  .col-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .col-image img {
+    width: 100%;
+    max-width: 350px;
+  }
+
+  .col-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  /* Services Section */
+  .services-section {
+    padding: 60px 0 40px;
+    border-top: none;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: 0 var(--spacing-page);
+  }
+
+  .service-card {
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+
+  .service-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .service-image {
+    width: 180px;
+    height: 180px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  .service-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .service-card:hover .service-image img {
+    transform: scale(1.05);
+  }
+
+  .service-card h3 {
+    color: #1a5276;
+    font-size: 1.3rem;
+    margin: 0 0 10px;
+    font-weight: 600;
+  }
+
+  .service-card p {
+    color: var(--color-accent);
+    font-size: 0.95rem;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* Banner Section */
+  .banner-section {
+    background-image: url('/images/banner-artwork.jpg');
+    background-size: cover;
+    background-position: center;
+    padding: 80px 20px;
+    text-align: center;
+    border-top: none;
+  }
+
+  .btn-gold {
+    background: var(--color-accent);
+    color: white;
+    padding: 15px 40px;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    border-radius: 30px;
+  }
+
+  .btn-gold:hover {
+    background: var(--color-accent-hover);
+    color: white;
+  }
+
+  /* Testimonials Section */
+  .testimonials-section {
+    padding: 60px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+    border-top: none;
+  }
+
+  .testimonial-card {
+    background: var(--color-bg-warm);
+    padding: 40px 60px;
+    border-radius: 50px;
+    text-align: center;
+    max-width: 800px;
+  }
+
+  .testimonial-quote {
+    font-size: 1.5rem;
+    color: var(--color-text);
+    margin: 0 0 10px;
+    font-weight: 500;
+  }
+
+  .testimonial-subquote {
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  /* FAQ Section */
+  .faq-section {
+    background: var(--color-accent);
+    padding: 60px 20px;
+    border-top: none;
+  }
+
+  .faq-section h2 {
+    color: #1a5276;
+    text-align: center;
+    font-size: 2rem;
+    margin: 0 0 40px;
+  }
+
+  .faq-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px 60px;
+    max-width: 900px;
+    margin: 0 auto 40px;
+  }
+
+  .faq-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #1a5276;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 10px 0;
+  }
+
+  .faq-question {
+    font-size: 1rem;
+  }
+
+  .faq-icon {
+    width: 24px;
+    height: 24px;
+    background: #1a5276;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    margin-left: 15px;
+  }
+
+  .btn-dark {
+    background: #1a5276;
+    color: white;
+    padding: 15px 40px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    border-radius: 30px;
+  }
+
+  .btn-dark:hover {
+    background: #154360;
+    color: white;
+  }
+
+  @media (max-width: 980px) {
+    .two-col {
+      grid-template-columns: 1fr;
+    }
+
+    .col-image {
+      order: 2;
+    }
+
+    .col-text {
+      order: 1;
+    }
+
+    .services-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .faq-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .services-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .service-image {
+      width: 150px;
+      height: 150px;
+    }
+
+    .testimonial-card {
+      padding: 30px;
+      border-radius: 30px;
+    }
+
+    .testimonial-quote {
+      font-size: 1.2rem;
+    }
+  }
+</style>

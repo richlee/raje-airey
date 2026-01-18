@@ -1,0 +1,224 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Contact - Raje Airey"
+  description="Get in touch with Raje Airey to arrange a counselling consultation in Stroud, Gloucestershire."
+>
+  <section class="contact-hero">
+    <h1>Contact Me</h1>
+    <p>
+      If you have a question or enquiry about any of my services or availability – please get in touch
+      and I will get back to you as soon as possible. <strong>All enquiries are confidential.</strong>
+    </p>
+  </section>
+
+  <section class="contact-main">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h2>Email security</h2>
+        <p>
+          I use an encrypted email service provided by Proton Mail. The information from your enquiry
+          will be stored on my password protected computer and smart phone. If we decide not to work
+          together I will delete this information promptly.
+        </p>
+
+        <h2>Privacy statement and data storage</h2>
+        <p>
+          I work under the terms of current data legislation, or General Data Protection Regulations (GDPR).
+        </p>
+        <p>
+          If we decide to work together you will be asked to complete a registration form after our initial
+          discussion and prior to our first appointment. This contains your name, address, phone number,
+          email address, date of birth, GP details and any other relevant personal information that you wish to share.
+        </p>
+        <p>
+          In addition to your personal information I keep a session log and brief notes as a record of the work.
+          Full information about data collection and storage is contained in my therapy contract.
+        </p>
+      </div>
+
+      <div class="contact-details">
+        <div class="contact-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+          </svg>
+          <a href="tel:07931310820">07931 310 820</a>
+        </div>
+        <div class="contact-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+          <a href="mailto:info@rajeairey.co.uk">info@rajeairey.co.uk</a>
+        </div>
+        <div class="contact-item">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+          </svg>
+          <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">Follow me</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="crisis-section">
+    <h2>Crisis management</h2>
+    <p>
+      If you are in need of urgent support, please contact your GP or NHS Out of Hours service on 111.
+      For life-threatening emergencies dial 999.
+    </p>
+
+    <div class="crisis-grid">
+      <div class="crisis-card">
+        <h3>The Samaritans</h3>
+        <p>Tel: 116 123</p>
+        <a href="https://www.samaritans.org/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Click here</a>
+      </div>
+      <div class="crisis-card">
+        <h3>Shout!</h3>
+        <p>Textline: 85258</p>
+        <p class="small">Free 24/7 Mental Health Support in the UK.</p>
+        <a href="https://giveusashout.org/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Click here</a>
+      </div>
+      <div class="crisis-card">
+        <h3>Suicide Crisis</h3>
+        <p>Tel: 07975 974 455</p>
+        <p class="small">Provides face to face crisis support. Centre open 24hrs a day located in Cheltenham, Gloucestershire.</p>
+        <a href="https://www.suicidecrisis.co.uk/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Click here</a>
+      </div>
+    </div>
+
+    <div class="helplines-links">
+      <p><strong>Helplines</strong> <a href="https://www.nhs.uk/mental-health/get-urgent-help-for-mental-health/">Find the right helpline for you here.</a></p>
+      <p><strong>Overseas</strong> For overseas support <a href="https://findahelpline.com/">click here</a>.</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact-hero {
+    text-align: center;
+    padding: 50px var(--spacing-page) 40px;
+    max-width: 800px;
+    margin: 0 auto;
+    border-bottom: none;
+  }
+
+  .contact-hero h1 {
+    margin-top: 0;
+  }
+
+  .contact-main {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: 40px var(--spacing-page);
+    border-top: none;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 60px;
+    align-items: start;
+  }
+
+  .contact-info h2 {
+    margin-top: 0;
+    font-size: 1.3rem;
+  }
+
+  .contact-info h2:not(:first-child) {
+    margin-top: 35px;
+  }
+
+  .contact-details {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .contact-item svg {
+    width: 24px;
+    height: 24px;
+    color: var(--color-accent);
+    flex-shrink: 0;
+  }
+
+  .contact-item a {
+    color: var(--color-accent);
+    font-size: 1.05rem;
+  }
+
+  .crisis-section {
+    background: var(--color-bg-subtle);
+    padding: 50px var(--spacing-page);
+    border-top: none;
+  }
+
+  .crisis-section h2 {
+    max-width: var(--content-width);
+    margin: 0 auto 15px;
+  }
+
+  .crisis-section > p {
+    max-width: var(--content-width);
+    margin: 0 auto 30px;
+  }
+
+  .crisis-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    max-width: var(--content-width);
+    margin: 0 auto 30px;
+  }
+
+  .crisis-card {
+    background: white;
+    padding: 25px;
+    border-radius: var(--radius-md);
+    text-align: center;
+  }
+
+  .crisis-card h3 {
+    color: #1a5276;
+    margin: 0 0 10px;
+    font-size: 1.1rem;
+  }
+
+  .crisis-card p {
+    margin: 0 0 10px;
+  }
+
+  .crisis-card .small {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+
+  .helplines-links {
+    max-width: var(--content-width);
+    margin: 0 auto;
+  }
+
+  .helplines-links p {
+    margin: 10px 0;
+  }
+
+  @media (max-width: 980px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .crisis-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,37 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  canonicalUrl?: string;
+}
+
+const {
+  title,
+  description = 'Psychotherapy & counselling for adults and young people in Stroud, Gloucestershire',
+  image,
+  canonicalUrl,
+} = Astro.props;
+
+const siteTitle = 'Raje Airey Counselling';
+const fullTitle = title === siteTitle ? title : `${title} | ${siteTitle}`;
+const url = canonicalUrl || Astro.url.href;
+---
+
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+
+{canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+
+<!-- OpenGraph -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={url} />
+{image && <meta property="og:image" content={image} />}
+
+<!-- Twitter -->
+<meta name="twitter:card" content={image ? 'summary_large_image' : 'summary'} />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+{image && <meta name="twitter:image" content={image} />}

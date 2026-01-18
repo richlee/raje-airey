@@ -1,0 +1,275 @@
+---
+const leftNav = [
+  { label: 'Home', href: '/' },
+  { label: 'Services', href: '/services/' },
+  { label: 'About', href: '/about/' },
+];
+
+const rightNav = [
+  { label: 'FAQ', href: '/faq/' },
+  { label: 'Blog', href: '/blog/' },
+  { label: 'Contact', href: '/contact/' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<div class="header-wrapper">
+  <div class="top-bar">
+    <div class="top-bar-inner">
+      <span class="phone">📞 07931310820</span>
+      <a href="mailto:info@rajeairey.co.uk">✉ info@rajeairey.co.uk</a>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <nav class="nav-left" aria-label="Main navigation">
+        {leftNav.map(item => (
+          <a
+            href={item.href}
+            class:list={['nav-link', { active: currentPath === item.href }]}
+            aria-current={currentPath === item.href ? 'page' : undefined}
+          >
+            {item.label}
+          </a>
+        ))}
+      </nav>
+
+      <a href="/" class="logo">
+        <img src="/images/logo-mandala.jpeg" alt="Raje Airey" class="logo-img" />
+      </a>
+
+      <nav class="nav-right">
+        {rightNav.map(item => (
+          <a
+            href={item.href}
+            class:list={['nav-link', { active: currentPath === item.href }]}
+            aria-current={currentPath === item.href ? 'page' : undefined}
+          >
+            {item.label}
+          </a>
+        ))}
+      </nav>
+    </div>
+  </header>
+</div>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', function() {
+    const headerWrapper = document.querySelector('.header-wrapper');
+    if (!headerWrapper) return;
+
+    let lastScrollY = 0;
+    let ticking = false;
+
+    function updateHeader() {
+      const scrollY = window.scrollY;
+
+      // Add scrolled class when we've scrolled past the top bar
+      if (scrollY > 20) {
+        headerWrapper.classList.add('scrolled');
+      } else {
+        headerWrapper.classList.remove('scrolled');
+      }
+
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', function() {
+      if (!ticking) {
+        requestAnimationFrame(updateHeader);
+        ticking = true;
+      }
+    }, { passive: true });
+
+    updateHeader();
+  });
+</script>
+
+<style>
+  .header-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: white;
+  }
+
+  .header-wrapper.scrolled {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .top-bar {
+    background-color: #E09900;
+    color: white;
+    font-size: 0.9rem;
+    overflow: hidden;
+    max-height: 50px;
+    transition: max-height 0.4s ease, padding 0.4s ease, opacity 0.4s ease;
+  }
+
+  .header-wrapper.scrolled .top-bar {
+    max-height: 32px;
+  }
+
+  .top-bar-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 10px 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    transition: padding 0.4s ease, font-size 0.4s ease;
+  }
+
+  .header-wrapper.scrolled .top-bar-inner {
+    padding: 5px 30px;
+    font-size: 0.8rem;
+  }
+
+  .top-bar .phone {
+    color: white;
+  }
+
+  .top-bar a {
+    color: white;
+    text-decoration: none;
+  }
+
+  .top-bar a:hover {
+    text-decoration: underline;
+  }
+
+  .site-header {
+    background: white;
+    border-bottom: 1px solid #eee;
+  }
+
+  .header-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    transition: padding 0.4s ease, gap 0.4s ease;
+  }
+
+  .header-wrapper.scrolled .header-inner {
+    padding: 8px 30px;
+    gap: 30px;
+  }
+
+  .logo {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .logo-img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+    transform-origin: center center;
+  }
+
+  .header-wrapper.scrolled .logo-img {
+    transform: scale(0.55);
+  }
+
+  .nav-left,
+  .nav-right {
+    flex: 1;
+    display: flex;
+    gap: 25px;
+  }
+
+  .nav-left {
+    justify-content: flex-end;
+  }
+
+  .nav-right {
+    justify-content: flex-start;
+  }
+
+  .nav-link {
+    color: #666;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .nav-link:hover,
+  .nav-link.active {
+    color: #E09900;
+  }
+
+  @media (max-width: 768px) {
+    .top-bar-inner {
+      flex-direction: column;
+      gap: 5px;
+      padding: 10px 20px;
+      font-size: 0.85rem;
+    }
+
+    .header-wrapper.scrolled .top-bar-inner {
+      flex-direction: row;
+      padding: 5px 20px;
+      font-size: 0.75rem;
+    }
+
+    .header-inner {
+      flex-wrap: wrap;
+      gap: 15px;
+      padding: 12px 20px;
+    }
+
+    .header-wrapper.scrolled .header-inner {
+      padding: 6px 20px;
+      gap: 10px;
+    }
+
+    .logo {
+      order: -1;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .header-wrapper.scrolled .logo {
+      width: auto;
+      order: 0;
+    }
+
+    .logo-img {
+      width: 70px;
+      height: 70px;
+    }
+
+    .nav-left,
+    .nav-right {
+      flex: none;
+      gap: 15px;
+    }
+
+    .header-wrapper.scrolled .nav-left,
+    .header-wrapper.scrolled .nav-right {
+      gap: 10px;
+    }
+
+    .nav-link {
+      font-size: 0.9rem;
+    }
+
+    .header-wrapper.scrolled .nav-link {
+      font-size: 0.85rem;
+    }
+  }
+</style>
