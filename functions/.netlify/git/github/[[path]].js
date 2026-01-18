@@ -1,9 +1,10 @@
-// Git Gateway for Sveltia/Decap CMS
+// Git Gateway for Decap CMS
 // Proxies GitHub API requests using the GITHUB_PAT service token
 
 const GITHUB_API = 'https://api.github.com';
 const REPO_OWNER = 'richlee';
 const REPO_NAME = 'raje-airey';
+const REPO_PATH = `/repos/${REPO_OWNER}/${REPO_NAME}`;
 
 export async function onRequest(context) {
   const { request, env, params } = context;
@@ -29,9 +30,14 @@ export async function onRequest(context) {
     githubPath += url.search;
   }
 
-  // The CMS sends paths like /repos/:owner/:repo/...
-  // Make sure we're only allowing our repo
-  if (githubPath.includes('/repos/') && !githubPath.includes(`/repos/${REPO_OWNER}/${REPO_NAME}`)) {
+  // Git-gateway sends short paths like /branches/main or /contents/file.md
+  // We need to prepend the repo path for the GitHub API
+  if (!githubPath.startsWith('/repos/')) {
+    githubPath = REPO_PATH + githubPath;
+  }
+
+  // Security: Make sure we're only allowing our repo
+  if (!githubPath.startsWith(REPO_PATH)) {
     return jsonResponse({ message: 'Access denied' }, 403);
   }
 
