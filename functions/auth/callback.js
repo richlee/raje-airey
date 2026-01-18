@@ -11,53 +11,76 @@ export async function onRequestGet(context) {
   const clientId = env.GITHUB_CLIENT_ID;
   const clientSecret = env.GITHUB_CLIENT_SECRET;
 
-  // Exchange code for access token
-  const tokenResponse = await fetch('https://github.com/login/oauth/access_token', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-    },
-    body: JSON.stringify({
-      client_id: clientId,
-      client_secret: clientSecret,
-      code: code,
-    }),
-  });
-
-  const tokenData = await tokenResponse.json();
-
-  if (tokenData.error) {
-    return new Response(`OAuth error: ${tokenData.error_description}`, { status: 400 });
+  if (!clientId || !clientSecret) {
+    return new Response('OAuth not configured. Please set GITHUB_CLIENT_ID and GITHUB_CLIENT_SECRET environment variables.', { status: 500 });
   }
 
-  // Return HTML that posts the token back to the CMS
-  const html = `
-<!DOCTYPE html>
+  try {
+    // Exchange code for access token
+    const tokenResponse = await fetch('https://github.com/login/oauth/access_token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify({
+        client_id: clientId,
+        client_secret: clientSecret,
+        code: code,
+      }),
+    });
+
+    const tokenData = await tokenResponse.json();
+
+    if (tokenData.error) {
+      return new Response(`OAuth error: ${tokenData.error_description || tokenData.error}`, { status: 400 });
+    }
+
+    const token = tokenData.access_token;
+    const provider = 'github';
+
+    // Return HTML that posts the token back to the CMS
+    const html = `<!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8">
     <title>Authenticating...</title>
   </head>
   <body>
+    <p>Authenticating with GitHub...</p>
     <script>
       (function() {
-        const token = "${tokenData.access_token}";
-        const provider = "github";
+        function receiveMessage(e) {
+          console.log("postMessage received:", e);
+          window.removeEventListener("message", receiveMessage, false);
+          window.close();
+        }
+        window.addEventListener("message", receiveMessage, false);
+
+        const message = "authorization:${provider}:success:" + JSON.stringify({
+          token: "${token}",
+          provider: "${provider}"
+        });
+
+        console.log("Sending message:", message);
 
         if (window.opener) {
-          window.opener.postMessage(
-            'authorization:' + provider + ':success:' + JSON.stringify({ token, provider }),
-            window.location.origin
-          );
-          window.close();
+          window.opener.postMessage(message, "*");
+          setTimeout(function() {
+            window.close();
+          }, 1000);
+        } else {
+          document.body.innerHTML = "<p>Error: No opener window found. Please close this window and try again.</p>";
         }
       })();
     </script>
-    <p>Authenticating... This window should close automatically.</p>
   </body>
 </html>`;
 
-  return new Response(html, {
-    headers: { 'Content-Type': 'text/html' },
-  });
+    return new Response(html, {
+      headers: { 'Content-Type': 'text/html' },
+    });
+  } catch (error) {
+    return new Response(`Error: ${error.message}`, { status: 500 });
+  }
 }
