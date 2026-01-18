@@ -128,13 +128,17 @@ const faqs = [
 
 <style>
   .hero {
-    padding: 50px 0 30px;
+    padding: 40px 0 10px;
     border-bottom: none;
   }
 
   .hero h1 {
     font-size: 2.5rem;
     margin-bottom: 5px;
+  }
+
+  .hero .lead {
+    margin-bottom: 0;
   }
 
   .credentials {
@@ -148,8 +152,18 @@ const faqs = [
   }
 
   .content-section {
-    padding: 40px 0;
+    padding: 25px 0 40px;
     border-top: none;
+  }
+
+  @media (max-width: 640px) {
+    .hero {
+      padding: 30px 0 5px;
+    }
+
+    .content-section {
+      padding: 15px 0 30px;
+    }
   }
 
   .col-image {
