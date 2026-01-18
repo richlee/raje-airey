@@ -31,27 +31,45 @@ const services = [
 const faqs = [
   {
     question: 'What sorts of issues do you work with?',
-    answer: 'Anxiety and stress, relationship difficulties, grief and loss, trauma, self-esteem issues, life transitions, and many more. See the full FAQ page for details.'
+    answer: `<p>Some of the most common issues I see in my practice:</p>
+    <ul>
+      <li>Adoption</li>
+      <li>Adverse childhood experiences</li>
+      <li>Anxiety and stress</li>
+      <li>Attachment issues</li>
+      <li>Bullying</li>
+      <li>Eating disorders</li>
+      <li>Emotional regulation</li>
+      <li>Feeling isolated, lacking direction</li>
+      <li>Grief and loss</li>
+      <li>Mood swings</li>
+      <li>Relationship difficulties – past or present</li>
+      <li>School, college or workplace problems</li>
+      <li>Self-criticism & low self-esteem</li>
+      <li>Self-harm</li>
+      <li>Transitions (e.g. to college, uni, having a baby, redundancy or retirement)</li>
+      <li>Trauma</li>
+    </ul>`
   },
   {
     question: 'What does therapy involve?',
-    answer: 'Therapy is an opportunity to reflect on yourself and your life in a safe, confidential setting. It helps you gain a better understanding of yourself and your relationships so you can move forwards.'
+    answer: `<p>Therapy involves the whole spectrum of human experience and emotion. In a safe, confidential setting, it is an opportunity to reflect on yourself and your life. To take a closer look at areas that may feel difficult, confusing, upsetting or frustrating. Therapy can help you 'get your house in order' so that you can resolve something. It aims to help you gain a better understanding of yourself, your relationships and your 'lifeworld' so that you can move forwards.</p>`
   },
   {
     question: "How can 'just talking' help?",
-    answer: 'A conversation with a therapist is different – the focus is entirely on you. I listen carefully, go at your pace, and help you make sense of your experiences and find ways to move forward.'
+    answer: `<p>A conversation with a therapist is different to other sorts of talking as the focus of attention is on you. At first this can feel strange or challenging, so I will help put you at ease, listening carefully to what you say, going at your pace and helping you stay grounded. I never expect you to reveal more than you want to and by working together I will help you make sense of your experiences and find ways to move forward.</p>`
   },
   {
     question: 'Does it matter what sort of therapy I choose?',
-    answer: 'Studies show that a good "fit" between you and your therapist is very important. Do some research, speak to a variety of therapists, and see what appeals to you.'
+    answer: `<p>Studies show that a good 'fit' between you and your therapist is very important when considering client outcomes. It is a good idea to do some research and see what appeals to you. Ideally speak to a variety of therapists before deciding. If I think that you would benefit from a different therapist or approach, then I will point you in the right direction.</p>`
   },
   {
     question: 'Do you work with people who are in crisis?',
-    answer: 'I work with people in crisis provided they are stable, can benefit from therapy, and have good support systems in place outside of our sessions.'
+    answer: `<p>At the first appointment I complete a risk assessment with all my clients and keep this under review as we go along. I will work with people in crisis provided they are stable, can benefit from working with me and have good support systems in place outside of therapy. These can include family or friends, regular contact with a GP or the support of mental health services. If I became concerned about a deterioration in your mental state, I would seek consent to share information with your GP. This is explained more fully in my therapy agreement.</p>`
   },
   {
     question: 'What is the difference between counselling and psychotherapy?',
-    answer: 'The terms are often used interchangeably. Psychotherapy typically involves post-graduate training with substantial personal therapy hours. I am UKCP registered.'
+    answer: `<p>The terms are often used interchangeably and there is no hard and fast distinction in the way I work. Psychotherapy is a Post-Grad level training and involves substantial hours spent in personal therapy and supervision. Counselling training is at under-grad or graduate level, may or may not require personal therapy and requires fewer hours to qualify. United Kingdom Council for Psychotherapy (UKCP) registration is generally seen as the 'gold standard' of the profession.</p>`
   }
 ];
 ---
@@ -138,7 +156,7 @@ const faqs = [
             <span class="faq-icon">+</span>
           </button>
           <div class="faq-answer">
-            <p>{faq.answer}</p>
+            <div class="faq-answer-content" set:html={faq.answer} />
           </div>
         </div>
       ))}
@@ -417,20 +435,33 @@ const faqs = [
     transition: grid-template-rows 0.3s ease;
   }
 
-  .faq-answer > p {
+  .faq-answer-content {
     overflow: hidden;
-    margin: 0;
     color: #1a5276;
     font-weight: 400;
     font-size: 0.95rem;
     line-height: 1.6;
   }
 
+  .faq-answer-content p {
+    margin: 0 0 0.75em;
+  }
+
+  .faq-answer-content ul {
+    margin: 0;
+    padding-left: 1.2em;
+  }
+
+  .faq-answer-content li {
+    margin-bottom: 0.3em;
+    line-height: 1.5;
+  }
+
   .faq-item.open .faq-answer {
     grid-template-rows: 1fr;
   }
 
-  .faq-item.open .faq-answer > p {
+  .faq-item.open .faq-answer-content {
     padding-bottom: 15px;
   }
 
