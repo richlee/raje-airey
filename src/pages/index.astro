@@ -29,12 +29,30 @@ const services = [
 ];
 
 const faqs = [
-  { question: 'What sorts of issues do you work with?' },
-  { question: 'What does therapy involve?' },
-  { question: "How can 'just talking' help?" },
-  { question: 'Does it matter what sort of therapy I choose?' },
-  { question: 'Do you work with people who are in crisis?' },
-  { question: 'What is the difference between counselling and psychotherapy?' }
+  {
+    question: 'What sorts of issues do you work with?',
+    answer: 'Anxiety and stress, relationship difficulties, grief and loss, trauma, self-esteem issues, life transitions, and many more. See the full FAQ page for details.'
+  },
+  {
+    question: 'What does therapy involve?',
+    answer: 'Therapy is an opportunity to reflect on yourself and your life in a safe, confidential setting. It helps you gain a better understanding of yourself and your relationships so you can move forwards.'
+  },
+  {
+    question: "How can 'just talking' help?",
+    answer: 'A conversation with a therapist is different – the focus is entirely on you. I listen carefully, go at your pace, and help you make sense of your experiences and find ways to move forward.'
+  },
+  {
+    question: 'Does it matter what sort of therapy I choose?',
+    answer: 'Studies show that a good "fit" between you and your therapist is very important. Do some research, speak to a variety of therapists, and see what appeals to you.'
+  },
+  {
+    question: 'Do you work with people who are in crisis?',
+    answer: 'I work with people in crisis provided they are stable, can benefit from therapy, and have good support systems in place outside of our sessions.'
+  },
+  {
+    question: 'What is the difference between counselling and psychotherapy?',
+    answer: 'The terms are often used interchangeably. Psychotherapy typically involves post-graduate training with substantial personal therapy hours. I am UKCP registered.'
+  }
 ];
 ---
 
@@ -113,10 +131,15 @@ const faqs = [
   <section class="faq-section">
     <h2>FAQs</h2>
     <div class="faq-grid">
-      {faqs.map(faq => (
-        <div class="faq-item">
-          <span class="faq-question">{faq.question}</span>
-          <span class="faq-icon">+</span>
+      {faqs.map((faq, index) => (
+        <div class="faq-item" data-faq={index}>
+          <button class="faq-header" aria-expanded="false">
+            <span class="faq-question">{faq.question}</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>{faq.answer}</p>
+          </div>
         </div>
       ))}
     </div>
@@ -124,6 +147,27 @@ const faqs = [
       <a href="/faq/" class="btn btn-dark">SEE MORE</a>
     </p>
   </section>
+
+  <script is:inline>
+    document.querySelectorAll('.faq-header').forEach(button => {
+      button.addEventListener('click', () => {
+        const item = button.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+
+        // Close all other items
+        document.querySelectorAll('.faq-item.open').forEach(openItem => {
+          if (openItem !== item) {
+            openItem.classList.remove('open');
+            openItem.querySelector('.faq-header').setAttribute('aria-expanded', 'false');
+          }
+        });
+
+        // Toggle current item
+        item.classList.toggle('open');
+        button.setAttribute('aria-expanded', !isOpen);
+      });
+    });
+  </script>
 </BaseLayout>
 
 <style>
@@ -321,13 +365,27 @@ const faqs = [
   }
 
   .faq-item {
+    color: #1a5276;
+    font-weight: 500;
+  }
+
+  .faq-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: #1a5276;
-    font-weight: 500;
-    cursor: pointer;
+    width: 100%;
+    background: none;
+    border: none;
     padding: 10px 0;
+    cursor: pointer;
+    text-align: left;
+    color: inherit;
+    font-weight: inherit;
+    font-family: inherit;
+  }
+
+  .faq-header:hover {
+    opacity: 0.8;
   }
 
   .faq-question {
@@ -346,6 +404,34 @@ const faqs = [
     font-size: 1.2rem;
     flex-shrink: 0;
     margin-left: 15px;
+    transition: transform 0.3s ease;
+  }
+
+  .faq-item.open .faq-icon {
+    transform: rotate(45deg);
+  }
+
+  .faq-answer {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s ease;
+  }
+
+  .faq-answer > p {
+    overflow: hidden;
+    margin: 0;
+    color: #1a5276;
+    font-weight: 400;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .faq-item.open .faq-answer {
+    grid-template-rows: 1fr;
+  }
+
+  .faq-item.open .faq-answer > p {
+    padding-bottom: 15px;
   }
 
   .btn-dark {
